@@ -1,8 +1,7 @@
 # MyReads Project
 
 
-<img src="./images/main.png" width=250 height=500>
-<img src="./images/search.png" width=250 height=500>
+<img src="./images/main.png" width=250 height=500><img src="./images/search.png" width=250 height=500>
 
 ## What is this? 
 
