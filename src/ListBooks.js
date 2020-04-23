@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom' 
 import PropTypes from 'prop-types' 
 
 
@@ -17,21 +16,21 @@ class ListBooks extends Component{
         const books = this.props.books.filter((book)=>(
             book.shelf === this.props.shelf
         ))
-        console.log(books)
-
-        const shelf = this.props.shelf
         const changeShelf = this.props.changeShelf
 
-    
+        console.log('books:', books)
+
         return (
             <ol className='books-grid'>
                 {books.map((book) =>(
 
-                    <li key={book.name} className='book-list-item'>
+                    <li key={book.id} className='book-list-item'>
                         <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 192, backgroundImage:`url(${book.imageURL})` }}></div>
+                            <div className="book-cover" style={{ width: 128, height: 192, backgroundImage:`url(${book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select onChange={event => changeShelf(book, event.target.value)}>
+
+                              <select onChange={event => changeShelf(book, event.target.value)}
+                                    defaultValue={book.shelf}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="none">None</option> 
                                 <option value="wantToRead">Want to Read</option>
@@ -41,8 +40,8 @@ class ListBooks extends Component{
                               </select>
                             </div>
                         </div>
-                        <div className="book-title">{book.name} </div>
-                        <div className="book-authors">{book.author} </div>
+                        <div className="book-title">{book.title} </div>
+                        <div className="book-authors">{book.authors} </div>
                     </li>
                     
                 ))}

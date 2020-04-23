@@ -5,7 +5,6 @@ import * as BooksAPI from './BooksAPI'
 
 class SearchBooks extends Component{
 
-
     static propTypes = {
         books: PropTypes.array.isRequired,
         addBook: PropTypes.func.isRequired,
@@ -34,6 +33,26 @@ class SearchBooks extends Component{
         }
       }
 
+    setDefaultValue(searchBook){
+        
+        console.log('setDefaultValue, searchBook:', searchBook)
+        const searchBookId = searchBook.id
+
+        let shelf = ''
+
+        if(this.props.books.length !== undefined){
+            this.props.books.forEach(function(book){
+                if (book.id === searchBookId){
+                    shelf = book.shelf
+                }
+            })
+        }
+
+    
+        return(
+            shelf
+        )
+    }
 
     updateQuery = query => {
         this.setState({query: query})
@@ -51,14 +70,7 @@ class SearchBooks extends Component{
                                     <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
                             </Link>
                             <div className="search-books-input-wrapper">
-                                {/*
-                                NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                                You can find these search terms here:
-                                https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                                However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                                you don't find a specific author or title. Every search is limited by search terms.
-                                */}
+                                
                                 <input 
                                     type="text" 
                                     placeholder="Search by title or author"
@@ -79,7 +91,9 @@ class SearchBooks extends Component{
                                                 <div className="book-top">
                                                         <div className="book-cover" style={{ width: 128, height: 192, backgroundImage:`url(${result.imageLinks.smallThumbnail})` }}></div>
                                                         <div className="book-shelf-changer">
-                                                            <select onChange={event => addBook(result, event.target.value)}>
+                                                            <select onChange={event => addBook(result, event.target.value)}
+                                                                defaultValue={this.setDefaultValue(result)}
+                                                                >
                                                                 <option value="move" disabled>Add to...</option>
                                                                 <option value="none">Add to None</option> 
                                                                 <option value="wantToRead">Add to 'Want to Read'</option>
