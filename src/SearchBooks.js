@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types' 
 import {Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import { CustomPlaceholder } from 'react-placeholder-image';
 
 class SearchBooks extends Component{
 
@@ -59,6 +60,20 @@ class SearchBooks extends Component{
         this.searchBook(query)
     }
 
+
+    showBookCover(result){
+        try {
+            const imageURL = result.imageLinks.smallThumbnail
+            return(
+                <div className="book-cover" style={{ width: 128, height: 192, backgroundImage:`url(${imageURL})` }}></div>
+            )
+        } catch (e){
+            return(
+                <CustomPlaceholder width={128} height={192} />
+            )
+        }
+        
+    }
     render(){
 
         const addBook = this.props.addBook
@@ -89,7 +104,7 @@ class SearchBooks extends Component{
                                        <div>  
                                             <li key={result.title} className='book-list-item'>
                                                 <div className="book-top">
-                                                        <div className="book-cover" style={{ width: 128, height: 192, backgroundImage:`url(${result.imageLinks.smallThumbnail})` }}></div>
+                                                        {this.showBookCover(result)}
                                                         <div className="book-shelf-changer">
                                                             <select onChange={event => addBook(result, event.target.value)}
                                                                 defaultValue={this.setDefaultValue(result)}
